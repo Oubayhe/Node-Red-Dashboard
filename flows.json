@@ -1,0 +1,2047 @@
+[
+    {
+        "id": "02b16f8c8605bafb",
+        "type": "file in",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "filename": "C:\\Users\\oubay\\received_data.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 360,
+        "y": 440,
+        "wires": [
+            [
+                "407b77e7f06b7f3d"
+            ]
+        ]
+    },
+    {
+        "id": "0841a02a55f83f0e",
+        "type": "inject",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 440,
+        "wires": [
+            [
+                "02b16f8c8605bafb"
+            ]
+        ]
+    },
+    {
+        "id": "407b77e7f06b7f3d",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "data",
+        "func": "\nvar inputData = msg.payload\ntry {\n    const jsonData = JSON.parse(inputData);\n\n    // Extract values and set them to variables\n    const temperature = jsonData.Temp;\n    const humidity = jsonData.Humi;\n    const speed = jsonData.Speed;\n    const distance = jsonData.Dist;\n    const direction = jsonData.Dire;\n    const image = jsonData.Image;\n    const master = jsonData.Mst;\n    const qr_code = jsonData.QR;\n    const elapsed_time = jsonData.elapsed_time;\n    const iteration = jsonData.iteration;\n    // const detectedObj = jsonData.Detected_Objects;\n    const coordinates = jsonData.Coordinates;\n\n    // Set variables in the output message\n    // msg.detectedObj = detectedObj;\n    msg.coordinates = coordinates;\n    msg.elapsed_time = elapsed_time.toFixed(2);\n    msg.iteration = iteration;\n    msg.master = master;\n    msg.temperature = temperature;\n    // msg.humidity = humidity;\n    msg.humidity = 20;\n    // msg.speed = speed;\n    msg.speed = 35;\n    msg.distance = distance;\n    msg.direction = direction;\n    msg.image = image;\n    msg.qr_code = qr_code;\n    console.log(msg.humidity)\n    return msg;\n} catch (error) {\n    node.error('Error parsing JSON data: ' + error.message);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 440,
+        "wires": [
+            [
+                "e5aa7b106de18f54",
+                "ab4119356d139200",
+                "f8d90911ac26b73c",
+                "bd3a33ccb8d7ed72",
+                "80f38d90e2c51da5",
+                "35b21d3eae51e82e",
+                "930d2d806e90e24d",
+                "e6694772856fe688",
+                "641953474899d89f",
+                "3072e86315279325",
+                "7ac7a6573861f7c7",
+                "5fc0e29a823005b4",
+                "27e388521a5bc06b",
+                "dfc8d1fbd7058c16",
+                "8a27a213cc766580",
+                "1a119b40adad4e0c",
+                "62e2c3d8121b266b"
+            ]
+        ]
+    },
+    {
+        "id": "e5aa7b106de18f54",
+        "type": "ui_artlessgauge",
+        "z": "1d5e9feace854559",
+        "group": "30f1e084e4589497",
+        "order": 1,
+        "width": 13,
+        "height": 1,
+        "name": "Température",
+        "icon": "fa-skyatlas ",
+        "label": "Tempreture",
+        "unit": "°C",
+        "layout": "linear",
+        "decimals": "0",
+        "differential": false,
+        "minmax": false,
+        "colorTrack": "#555555",
+        "style": "",
+        "colorFromTheme": true,
+        "property": "temperature",
+        "secondary": "secondary",
+        "inline": false,
+        "animate": true,
+        "sectors": [
+            {
+                "val": 0,
+                "col": "#0e35fb",
+                "t": "min",
+                "dot": 0
+            },
+            {
+                "val": 20,
+                "col": "#1fea41",
+                "t": "sec",
+                "dot": 0
+            },
+            {
+                "val": 24,
+                "col": "#f72222",
+                "t": "sec",
+                "dot": 0
+            },
+            {
+                "val": 50,
+                "col": "#f72222",
+                "t": "max",
+                "dot": 0
+            }
+        ],
+        "lineWidth": "5",
+        "bgcolorFromTheme": true,
+        "diffCenter": "",
+        "x": 930,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "ab4119356d139200",
+        "type": "ui_artlessgauge",
+        "z": "1d5e9feace854559",
+        "group": "30f1e084e4589497",
+        "order": 7,
+        "width": 13,
+        "height": 1,
+        "name": "Distance",
+        "icon": "fa-road",
+        "label": "Distance",
+        "unit": "cm",
+        "layout": "linear",
+        "decimals": "0",
+        "differential": false,
+        "minmax": false,
+        "colorTrack": "#555555",
+        "style": "",
+        "colorFromTheme": true,
+        "property": "distance",
+        "secondary": "secondary",
+        "inline": false,
+        "animate": true,
+        "sectors": [
+            {
+                "val": 0,
+                "col": "#fb0e0e",
+                "t": "min",
+                "dot": 0
+            },
+            {
+                "val": 10,
+                "col": "#ead91f",
+                "t": "sec",
+                "dot": 0
+            },
+            {
+                "val": 30,
+                "col": "#28d41c",
+                "t": "sec",
+                "dot": 0
+            },
+            {
+                "val": 50,
+                "col": "#28d41c",
+                "t": "max",
+                "dot": 0
+            }
+        ],
+        "lineWidth": "5",
+        "bgcolorFromTheme": true,
+        "diffCenter": "",
+        "x": 920,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "9e0b1a90114968b8",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 2,
+        "group": "30f1e084e4589497",
+        "width": 2,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "right",
+        "labelAlignment": "right",
+        "colorForValue": [
+            {
+                "color": "#0000ff",
+                "value": "Blue",
+                "valueType": "str"
+            },
+            {
+                "color": "#008000",
+                "value": "Green",
+                "valueType": "str"
+            },
+            {
+                "color": "#ff0000",
+                "value": "Red",
+                "valueType": "str"
+            }
+        ],
+        "allowColorForValueInMessage": true,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Température",
+        "x": 1110,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "f8d90911ac26b73c",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 62",
+        "func": "if(msg.temperature < 20) {\n    msg.payload = \"Blue\";\n} else if(msg.temperature > 24) {\n    msg.payload = \"Red\";\n} else {\n    msg.payload = \"Green\";\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 260,
+        "wires": [
+            [
+                "9e0b1a90114968b8"
+            ]
+        ]
+    },
+    {
+        "id": "f742726dc5ab9f87",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 8,
+        "group": "30f1e084e4589497",
+        "width": 2,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "right",
+        "labelAlignment": "right",
+        "colorForValue": [
+            {
+                "color": "#0000ff",
+                "value": "Blue",
+                "valueType": "str"
+            },
+            {
+                "color": "#008000",
+                "value": "Green",
+                "valueType": "str"
+            },
+            {
+                "color": "#ffff00",
+                "value": "Yellow",
+                "valueType": "str"
+            }
+        ],
+        "allowColorForValueInMessage": true,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Distance",
+        "x": 1080,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "8a27a213cc766580",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 63",
+        "func": "if(msg.distance > 30) {\n    msg.payload = \"Green\";\n} else if (msg.distance < 10) {\n    msg.payload = \"Red\";\n} else {\n    msg.payload = \"Yellow\";\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 760,
+        "wires": [
+            [
+                "f742726dc5ab9f87"
+            ]
+        ]
+    },
+    {
+        "id": "917c45dc27aa8cec",
+        "type": "ui_template",
+        "z": "1d5e9feace854559",
+        "group": "81b1bdc3.9a60b8",
+        "name": "CSS-Basics",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n\n* {\n    background: none !important;\n}\n.nr-dashboard-text {\n    font-size: 25px;\n    gap: 12px;\n}\n.md-toolbar-tools h1 {\n    font-weight: 900;\n    text-align: center;\n}\n    root, a, button, p, div {\n        -webkit-user-select: none !important;\n    }\n\n    body {\n        /*background-image: url(\"http://192.168.178.1:1880/ui/2023.jpg\");*/\n        /* background: linear-gradient(120deg, rgba(40, 42, 49, 1.0) 40%, rgba(47, 49, 56, 1.0) 80%) !important; */\n        /*background-size: cover !important;*/\n        background: transparent !important;\n\n        background: -webkit-linear-gradient(\n            55deg,\n            #009785 0%,\n            #245aa5 100%\n        ) !important;\n        \n        -webkit-touch-callout: none !important;\n        color: #ffffff !important;\n        padding-top:5px !important;\n    }\n    \n    body.nr-dashboard-theme md-toolbar,\n    body.nr-dashboard-theme md-content md-card {\n\n    }\n\n    \n    ui-card-panel {\n        background-color: rgba(250,250,250,0.3) !important;\n        border:none !important;\n        border-radius: 10px !important;\n/*        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19) !important;\n*/    }\n\n    ui-card-panel>div.nr-dashboard-cardpanel>div>md-card {\n        background: none !important;\n    }\n    ui-card-panel>div.nr-dashboard-cardpanel button {\n        /*background: none !important;*/\n    } \n    md-toolbar {\n        background: none !important;\n    }\n    md-sidenav {\n        background: linear-gradient(120deg, rgba(40, 42, 49, 0.90) 20%, rgba(47, 49, 56, 0.90) 80%) !important;\n    }\n    md-card.nr-dashboard-button * {\n        box-shadow: none !important;\n    }\n    md-card.nr-dashboard-template * {\n        background: none !important;\n    }\n    \n</style>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "global",
+        "className": "",
+        "x": 90,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bd3a33ccb8d7ed72",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "Direction",
+        "func": "msg.payload = msg.direction\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 840,
+        "wires": [
+            [
+                "8790f02e9572295d",
+                "c30e8cd4611acce0",
+                "daee5b52bf43d17b",
+                "ca07fb7387d3f2a4",
+                "7f21742c9542b973",
+                "96c4567e117e273e",
+                "575743747cc01846",
+                "f474f9a19ad7e99a",
+                "9257c62a1ebaf105"
+            ]
+        ]
+    },
+    {
+        "id": "4aeadbef3d82eb45",
+        "type": "debug",
+        "z": "1d5e9feace854559",
+        "name": "Direction",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "c168c555b2543b69",
+        "type": "ui_text",
+        "z": "1d5e9feace854559",
+        "group": "30f1e084e4589497",
+        "order": 9,
+        "width": 5,
+        "height": 1,
+        "name": "Direction",
+        "label": "<i class=\"fa fa-arrows\" aria-hidden=\"true\"></i> Direction:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": true,
+        "font": "",
+        "fontSize": "18",
+        "color": "#ffffff",
+        "x": 1480,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "8790f02e9572295d",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 64",
+        "func": "if(msg.payload === 'L') {\n    msg.payload = 'Left';\n} else if (msg.payload === 'R') {\n    msg.payload = 'Right';\n} else {\n    msg.payload = 'Straight';\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 760,
+        "wires": [
+            [
+                "c168c555b2543b69"
+            ]
+        ]
+    },
+    {
+        "id": "9257c62a1ebaf105",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 65",
+        "func": "const sleep = (milliseconds) => {\n  return new Promise(resolve => setTimeout(resolve, milliseconds))\n}\n\nasync function timeSleep(n) {\n  await sleep(100 * n); // Convert seconds to milliseconds\n}\n\n\n  if (msg.payload === 'L') {\n    // This the first Led in L:\n    await timeSleep(0);\n    msg.payload = true;\n  } else if (msg.payload === 'R') {\n    await timeSleep(7);\n    msg.payload = true;\n  } else {\n    msg.payload = false;\n  }\n  return msg;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 840,
+        "wires": [
+            [
+                "7e0179c0a0934e5e"
+            ]
+        ]
+    },
+    {
+        "id": "f474f9a19ad7e99a",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 66",
+        "func": "const sleep = (milliseconds) => {\n  return new Promise(resolve => setTimeout(resolve, milliseconds))\n}\n\nasync function timeSleep(n) {\n  await sleep(100 * n); // Convert seconds to milliseconds\n}\n\n\n  if (msg.payload === 'L') {\n    // This the first Led in L:\n    await timeSleep(1);\n    msg.payload = true;\n  } else if (msg.payload === 'R') {\n    await timeSleep(6);\n    msg.payload = true;\n  } else {\n    msg.payload = false;\n  }\n  return msg;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 880,
+        "wires": [
+            [
+                "f1d0824e06f4fbe7"
+            ]
+        ]
+    },
+    {
+        "id": "575743747cc01846",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 67",
+        "func": "const sleep = (milliseconds) => {\n  return new Promise(resolve => setTimeout(resolve, milliseconds))\n}\n\nasync function timeSleep(n) {\n  await sleep(100 * n); // Convert seconds to milliseconds\n}\n\n\n  if (msg.payload === 'L') {\n    // This the first Led in L:\n    await timeSleep(2);\n    msg.payload = true;\n  } else if (msg.payload === 'R') {\n    await timeSleep(5);\n    msg.payload = true;\n  } else {\n    msg.payload = false;\n  }\n  return msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 920,
+        "wires": [
+            [
+                "59aaac5974d8235e"
+            ]
+        ]
+    },
+    {
+        "id": "96c4567e117e273e",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 68",
+        "func": "const sleep = (milliseconds) => {\n  return new Promise(resolve => setTimeout(resolve, milliseconds))\n}\n\nasync function timeSleep(n) {\n  await sleep(100 * n); // Convert seconds to milliseconds\n}\n\n  if (msg.payload === 'L') {\n    // This the first Led in L:\n    await timeSleep(3);\n    msg.payload = true;\n  } else if (msg.payload === 'R') {\n    await timeSleep(4);\n    msg.payload = true;\n  } else {\n    msg.payload = false;\n  }\n  return msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 960,
+        "wires": [
+            [
+                "015020169e109eb0"
+            ]
+        ]
+    },
+    {
+        "id": "7e0179c0a0934e5e",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 10,
+        "group": "30f1e084e4589497",
+        "width": 1,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led1",
+        "x": 1510,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "f1d0824e06f4fbe7",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 11,
+        "group": "30f1e084e4589497",
+        "width": 1,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led2",
+        "x": 1510,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "59aaac5974d8235e",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 12,
+        "group": "30f1e084e4589497",
+        "width": 1,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led3",
+        "x": 1510,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "015020169e109eb0",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 13,
+        "group": "30f1e084e4589497",
+        "width": 1,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led4",
+        "x": 1510,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "8f1e24f5cfa8f675",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 14,
+        "group": "30f1e084e4589497",
+        "width": 1,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led5",
+        "x": 1510,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "7f21742c9542b973",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 69",
+        "func": "const sleep = (milliseconds) => {\n  return new Promise(resolve => setTimeout(resolve, milliseconds))\n}\n\nasync function timeSleep(n) {\n  await sleep(100 * n); // Convert seconds to milliseconds\n}\n\n\n  if (msg.payload === 'L') {\n    // This the first Led in L:\n    await timeSleep(4);\n    msg.payload = true;\n  } else if (msg.payload === 'R') {\n    await timeSleep(3);\n    msg.payload = true;\n  } else {\n    msg.payload = false;\n  }\n  return msg;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 1000,
+        "wires": [
+            [
+                "8f1e24f5cfa8f675"
+            ]
+        ]
+    },
+    {
+        "id": "ca07fb7387d3f2a4",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 70",
+        "func": "const sleep = (milliseconds) => {\n  return new Promise(resolve => setTimeout(resolve, milliseconds))\n}\n\nasync function timeSleep(n) {\n  await sleep(100 * n); // Convert seconds to milliseconds\n}\n\n\n  if (msg.payload === 'L') {\n    // This the first Led in L:\n    await timeSleep(5);\n    msg.payload = true;\n  } else if (msg.payload === 'R') {\n    await timeSleep(2);\n    msg.payload = true;\n  } else {\n    msg.payload = false;\n  }\n  return msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 1040,
+        "wires": [
+            [
+                "b92de3aa76549ef6"
+            ]
+        ]
+    },
+    {
+        "id": "daee5b52bf43d17b",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 71",
+        "func": "const sleep = (milliseconds) => {\n  return new Promise(resolve => setTimeout(resolve, milliseconds))\n}\n\nasync function timeSleep(n) {\n  await sleep(100 * n); // Convert seconds to milliseconds\n}\n\n  if (msg.payload === 'L') {\n    // This the first Led in L:\n    await timeSleep(6);\n    msg.payload = true;\n  } else if (msg.payload === 'R') {\n    await timeSleep(1);\n    msg.payload = true;\n  } else {\n    msg.payload = false;\n  }\n  return msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 1080,
+        "wires": [
+            [
+                "3bbf46991fe1b14f"
+            ]
+        ]
+    },
+    {
+        "id": "b92de3aa76549ef6",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 15,
+        "group": "30f1e084e4589497",
+        "width": 1,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led6",
+        "x": 1510,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "3bbf46991fe1b14f",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 16,
+        "group": "30f1e084e4589497",
+        "width": 1,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led7",
+        "x": 1510,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "9e2887941d8168e5",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 17,
+        "group": "30f1e084e4589497",
+        "width": 1,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led8",
+        "x": 1510,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "c30e8cd4611acce0",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 72",
+        "func": "const sleep = (milliseconds) => {\n  return new Promise(resolve => setTimeout(resolve, milliseconds))\n}\n\nasync function timeSleep(n) {\n  await sleep(100 * n); // Convert seconds to milliseconds\n}\n\n\n  if (msg.payload === 'L') {\n    // This the first Led in L:\n    await timeSleep(7);\n    msg.payload = true;\n  } else if (msg.payload === 'R') {\n    await timeSleep(0);\n    msg.payload = true;\n  } else {\n    msg.payload = false;\n  }\n  return msg;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 1120,
+        "wires": [
+            [
+                "9e2887941d8168e5"
+            ]
+        ]
+    },
+    {
+        "id": "cb476405469631c8",
+        "type": "ui_template",
+        "z": "1d5e9feace854559",
+        "group": "c15864021fc5bf77",
+        "name": "",
+        "order": 3,
+        "width": 12,
+        "height": 11,
+        "format": "<div>\n    <h3>Qr code</h3>\n    <div class=\"image-container\">\n    <img \n        class=\"imgUser\"\n        src={{msg.payload}}>\n    </div>\n    <style>\n        .image-container {\n            text-align: center;\n        }\n        .image-container img {\n            vertical-align: center;\n        }\n    </style>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 920,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "80f38d90e2c51da5",
+        "type": "jimp-image",
+        "z": "1d5e9feace854559",
+        "name": "QR Code",
+        "data": "qr_code",
+        "dataType": "msg",
+        "ret": "b64",
+        "parameter1": "",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 0,
+        "jimpFunction": "none",
+        "selectedJimpFunction": {
+            "name": "none",
+            "fn": "none",
+            "description": "Just loads the image.",
+            "parameters": []
+        },
+        "x": 780,
+        "y": 180,
+        "wires": [
+            [
+                "cb476405469631c8"
+            ]
+        ]
+    },
+    {
+        "id": "0b1d954e03ae4b85",
+        "type": "jimp-image",
+        "z": "1d5e9feace854559",
+        "name": "Image",
+        "data": "image",
+        "dataType": "msg",
+        "ret": "img",
+        "parameter1": "",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 0,
+        "jimpFunction": "none",
+        "selectedJimpFunction": {
+            "name": "none",
+            "fn": "none",
+            "description": "Just loads the image.",
+            "parameters": []
+        },
+        "x": 1110,
+        "y": 140,
+        "wires": [
+            [
+                "8d866ff125df3e0b"
+            ]
+        ]
+    },
+    {
+        "id": "8d866ff125df3e0b",
+        "type": "image viewer",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1230,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e9fa6b3750fc596f",
+        "type": "ui_template",
+        "z": "1d5e9feace854559",
+        "group": "c15864021fc5bf77",
+        "name": "",
+        "order": 2,
+        "width": 12,
+        "height": 11,
+        "format": "<div>\n    <h3>API</h3>\n    <div class=\"image-container\">\n        <img\n            class=\"imgUser\"\n            src={{msg.payload}}>\n    </div>\n    <style>\n        .image-container {\n            text-align: center;\n        }\n    </style>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1240,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "35b21d3eae51e82e",
+        "type": "jimp-image",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "data": "image",
+        "dataType": "msg",
+        "ret": "b64",
+        "parameter1": "",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 0,
+        "jimpFunction": "none",
+        "selectedJimpFunction": {
+            "name": "none",
+            "fn": "none",
+            "description": "Just loads the image.",
+            "parameters": []
+        },
+        "x": 1110,
+        "y": 180,
+        "wires": [
+            [
+                "e9fa6b3750fc596f"
+            ]
+        ]
+    },
+    {
+        "id": "43d066a005723251",
+        "type": "ui_chart",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "group": "6197078df124b1e4",
+        "order": 1,
+        "width": 7,
+        "height": 4,
+        "label": "Tempreture Chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "40",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1110,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "930d2d806e90e24d",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "Temperature",
+        "func": "msg.payload = msg.temperature\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 340,
+        "wires": [
+            [
+                "43d066a005723251"
+            ]
+        ]
+    },
+    {
+        "id": "2225fe36a1b3b38d",
+        "type": "ui_chart",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "group": "6197078df124b1e4",
+        "order": 8,
+        "width": 7,
+        "height": 4,
+        "label": "Distance Chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#fb9032",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1100,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e6694772856fe688",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "Distance",
+        "func": "msg.payload = msg.distance\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 720,
+        "wires": [
+            [
+                "2225fe36a1b3b38d"
+            ]
+        ]
+    },
+    {
+        "id": "d4c7ac72e4e52de9",
+        "type": "inject",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 500,
+        "wires": [
+            [
+                "c9459f5ef8f24688"
+            ]
+        ]
+    },
+    {
+        "id": "c9459f5ef8f24688",
+        "type": "jimp-image",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "data": "C:\\Users\\oubay\\OneDrive\\Desktop\\S7\\Système Embarqués\\Groupe_SysEmb.jpg",
+        "dataType": "str",
+        "ret": "b64",
+        "parameter1": "",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 0,
+        "jimpFunction": "none",
+        "selectedJimpFunction": {
+            "name": "none",
+            "fn": "none",
+            "description": "Just loads the image.",
+            "parameters": []
+        },
+        "x": 290,
+        "y": 500,
+        "wires": [
+            [
+                "d18b63c4dfa0ee2f"
+            ]
+        ]
+    },
+    {
+        "id": "d18b63c4dfa0ee2f",
+        "type": "ui_template",
+        "z": "1d5e9feace854559",
+        "group": "4229012c917460c6",
+        "name": "",
+        "order": 2,
+        "width": 27,
+        "height": 15,
+        "format": "<div>\n    <div class=\"supervizer\">Superviser: <span class=\"supervizer-name\"> Pr. Abderrahim BAJIT </span></div>\n    <div class=\"students\">\n    <ul class=\"div-g-info\">\n        <h3 class=\"fiier-title\">Computer Science:</h3>\n        <li>OUBAYHE Otmane</li>\n        <li>SAIF Mouad</li>\n        <li>KARRA Amine</li>\n        <li>BENALI Mohammed</li>\n    </ul>\n    <ul class=\"div-g-méca\">\n        <h3 class=\"fiier-title\">Mechatronics:</h3>\n        <li>BANI Rihab</li>\n        <li>AQUIL Samia</li>\n        <li>HAZIM Zained</li>\n        <li>BOUZKRAOUI Assia</li>\n    </ul>\n    </div>\n    <div class=\"image\">\n        <img \n        class=\"group-image\"\n        src={{msg.payload}}>\n    </div>\n    <style>\n        .image {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n        }\n        .image img {\n            transform: scale(0.8);\n        }\n        .supervizer{\n            margin-left: 25px;\n            display: flex;\n            font-size: 16px;\n        }\n        .supervizer-name {\n            font-size: 20px;\n            font-weight: 700;\n            margin-left: 5px;\n        }\n        .students {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 18px;\n            font-weight: 600;\n        }\n        ul {\n            width: 50%;\n        }\n    </style>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 440,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0eb071f3ef3caf75",
+        "type": "inject",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 620,
+        "wires": [
+            [
+                "65e72609a0e19aef"
+            ]
+        ]
+    },
+    {
+        "id": "14bd8a2cce50fbf7",
+        "type": "ui_template",
+        "z": "1d5e9feace854559",
+        "group": "9ed696d0692de4ae",
+        "name": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<div>\n    <div class=\"top-bar\">\n    <div class=\"logo\">\n        <img \n        class=\"logo-image\"\n        src={{msg.payload}}>\n    </div>\n    <h3>ON-BOARD COMPUTING, INTELLIGENCE & CYCBERSECURITY AGRICULTURAL AND VEHICULAR PLATFORM</h3>\n    </div>\n    <style>\n        .top-bar {\n            display: flex;\n            align-items: center;\n            gap: 260px;\n        }\n        .logo-image {\n            float: left;\n            transform: scale(0.6);\n        } \n        h3 {\n            text-align: center;\n        }\n    </style>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 520,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "65e72609a0e19aef",
+        "type": "jimp-image",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "data": "C:\\Users\\oubay\\OneDrive\\Desktop\\S7\\Système Embarqués\\logo2.png",
+        "dataType": "str",
+        "ret": "b64",
+        "parameter1": "",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 0,
+        "jimpFunction": "none",
+        "selectedJimpFunction": {
+            "name": "none",
+            "fn": "none",
+            "description": "Just loads the image.",
+            "parameters": []
+        },
+        "x": 370,
+        "y": 620,
+        "wires": [
+            [
+                "14bd8a2cce50fbf7"
+            ]
+        ]
+    },
+    {
+        "id": "1a119b40adad4e0c",
+        "type": "ui_template",
+        "z": "1d5e9feace854559",
+        "group": "7a35578913c2a642",
+        "name": "",
+        "order": 1,
+        "width": 15,
+        "height": 4,
+        "format": "<div>\n    <div class=\"status\">\n        <div class=\"master section\">\n            <i class=\"fa fa-laptop\" aria-hidden=\"true\"></i>\n            Active Node: \n            <span>{{msg.master}}</span>\n            </div>\n        <div class=\"iteration section\">\n             <i class=\"fa fa-level-up\" aria-hidden=\"true\"></i>\n             Iteration: \n            <span>{{msg.iteration}}</span>\n        </div>\n        <div class=\"timer section\">\n            <i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>\n            Execution Time: \n            <span>{{msg.elapsed_time}}s</span>\n        </div>\n        <div class=\"cordinates section\">\n            <i class=\"fa fa-thumb-tack\" aria-hidden=\"true\"></i>\n            Object coordinates: \n            <span>{{msg.coordinates}}</span>\n        </div>\n    </div>\n    <style>\n        .section {\n            margin: 15px;\n        }\n        .status {\n            font-size: 18px;\n            font-weight: 600;\n        }\n        span {\n            font-size: 20px;\n            font-weight: 700;\n        }\n    </style>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 920,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3072e86315279325",
+        "type": "ui_artlessgauge",
+        "z": "1d5e9feace854559",
+        "group": "30f1e084e4589497",
+        "order": 3,
+        "width": 13,
+        "height": 1,
+        "name": "Humidity",
+        "icon": "fa-tint",
+        "label": "Humidity",
+        "unit": "%",
+        "layout": "linear",
+        "decimals": "0",
+        "differential": false,
+        "minmax": false,
+        "colorTrack": "#555555",
+        "style": "",
+        "colorFromTheme": true,
+        "property": "humidity",
+        "secondary": "secondary",
+        "inline": false,
+        "animate": true,
+        "sectors": [
+            {
+                "val": 0,
+                "col": "#0e35fb",
+                "t": "min",
+                "dot": 0
+            },
+            {
+                "val": 30,
+                "col": "#1fea41",
+                "t": "sec",
+                "dot": 0
+            },
+            {
+                "val": 80,
+                "col": "#f72222",
+                "t": "sec",
+                "dot": 0
+            },
+            {
+                "val": 100,
+                "col": "#f72222",
+                "t": "max",
+                "dot": 0
+            }
+        ],
+        "lineWidth": "5",
+        "bgcolorFromTheme": true,
+        "diffCenter": "",
+        "x": 920,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "50e0f0844ca6270f",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 4,
+        "group": "30f1e084e4589497",
+        "width": 2,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "right",
+        "labelAlignment": "right",
+        "colorForValue": [
+            {
+                "color": "#0000ff",
+                "value": "Blue",
+                "valueType": "str"
+            },
+            {
+                "color": "#008000",
+                "value": "Green",
+                "valueType": "str"
+            },
+            {
+                "color": "#ff0000",
+                "value": "Red",
+                "valueType": "str"
+            }
+        ],
+        "allowColorForValueInMessage": true,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Humidity",
+        "x": 1100,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "641953474899d89f",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 73",
+        "func": "if(msg.humidity < 30) {\n    msg.payload = \"Blue\";\n} else if(msg.humidity > 80) {\n    msg.payload = \"Red\";\n} else {\n    msg.payload = \"Green\";\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 400,
+        "wires": [
+            [
+                "50e0f0844ca6270f"
+            ]
+        ]
+    },
+    {
+        "id": "497f543d750d99b8",
+        "type": "ui_chart",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "group": "6197078df124b1e4",
+        "order": 2,
+        "width": 7,
+        "height": 4,
+        "label": "Humidity Chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "40",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1100,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7ac7a6573861f7c7",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "Temperature",
+        "func": "msg.payload = msg.temperature\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 480,
+        "wires": [
+            [
+                "497f543d750d99b8"
+            ]
+        ]
+    },
+    {
+        "id": "27e388521a5bc06b",
+        "type": "ui_artlessgauge",
+        "z": "1d5e9feace854559",
+        "group": "30f1e084e4589497",
+        "order": 5,
+        "width": 13,
+        "height": 1,
+        "name": "Speed",
+        "icon": "fa-tachometer",
+        "label": "Speed",
+        "unit": "km/h",
+        "layout": "linear",
+        "decimals": "0",
+        "differential": false,
+        "minmax": false,
+        "colorTrack": "#555555",
+        "style": "",
+        "colorFromTheme": true,
+        "property": "speed",
+        "secondary": "secondary",
+        "inline": false,
+        "animate": true,
+        "sectors": [
+            {
+                "val": 0,
+                "col": "#1fea41",
+                "t": "min",
+                "dot": 0
+            },
+            {
+                "val": 25,
+                "col": "#e4f03d",
+                "t": "sec",
+                "dot": 0
+            },
+            {
+                "val": 45,
+                "col": "#f72222",
+                "t": "sec",
+                "dot": 0
+            },
+            {
+                "val": 60,
+                "col": "#f72222",
+                "t": "max",
+                "dot": 0
+            }
+        ],
+        "lineWidth": "5",
+        "bgcolorFromTheme": true,
+        "diffCenter": "",
+        "x": 910,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "db69e9ba0882c00d",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 6,
+        "group": "30f1e084e4589497",
+        "width": 2,
+        "height": 1,
+        "label": "",
+        "labelPlacement": "right",
+        "labelAlignment": "right",
+        "colorForValue": [
+            {
+                "color": "#ffff00",
+                "value": "Yellow",
+                "valueType": "str"
+            },
+            {
+                "color": "#008000",
+                "value": "Green",
+                "valueType": "str"
+            },
+            {
+                "color": "#ff0000",
+                "value": "Red",
+                "valueType": "str"
+            }
+        ],
+        "allowColorForValueInMessage": true,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Speed",
+        "x": 1090,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "5fc0e29a823005b4",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "function 74",
+        "func": "if(msg.speed < 25) {\n    msg.payload = \"Green\";\n} else if(msg.speed > 45) {\n    msg.payload = \"Red\";\n} else {\n    msg.payload = \"Yellow\";\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 540,
+        "wires": [
+            [
+                "db69e9ba0882c00d"
+            ]
+        ]
+    },
+    {
+        "id": "da90e15f27b4ee70",
+        "type": "ui_chart",
+        "z": "1d5e9feace854559",
+        "name": "",
+        "group": "6197078df124b1e4",
+        "order": 7,
+        "width": 7,
+        "height": 4,
+        "label": "Speed Chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "40",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1090,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dfc8d1fbd7058c16",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "Temperature",
+        "func": "msg.payload = msg.temperature\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 620,
+        "wires": [
+            [
+                "da90e15f27b4ee70"
+            ]
+        ]
+    },
+    {
+        "id": "0974c73070bb810d",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "active node",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "62e2c3d8121b266b",
+        "type": "function",
+        "z": "1d5e9feace854559",
+        "name": "ActiveNode",
+        "func": "var master = msg.master;\nmaster = master.split(\" \");\nif(master[0] == \"Real\"){\n    msg.payload = 0\n} else {\n    msg.payload = parseInt(master[2]);\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 900,
+        "wires": [
+            [
+                "158111b1eed57f58",
+                "60be519f2c502d5c",
+                "e0ed5c1f92e3eda2",
+                "8fe4b486195be73d",
+                "195768347c81642d",
+                "4aeadbef3d82eb45"
+            ]
+        ]
+    },
+    {
+        "id": "158111b1eed57f58",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 1,
+        "group": "2ffcd4b4969b4763",
+        "width": 5,
+        "height": 1,
+        "label": "Real Master 1",
+        "labelPlacement": "right",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "4",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "1",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "2",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "3",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "4",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": true,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "0",
+        "x": 930,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "60be519f2c502d5c",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 2,
+        "group": "2ffcd4b4969b4763",
+        "width": 5,
+        "height": 1,
+        "label": "Virtual Master 1",
+        "labelPlacement": "right",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#808080",
+                "value": "4",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "1",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "2",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "3",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "4",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": true,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "1",
+        "x": 930,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "e0ed5c1f92e3eda2",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 3,
+        "group": "2ffcd4b4969b4763",
+        "width": 5,
+        "height": 1,
+        "label": "Virtual Master 2",
+        "labelPlacement": "right",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#808080",
+                "value": "4",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "1",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "2",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "3",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "4",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": true,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "2",
+        "x": 930,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "8fe4b486195be73d",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 5,
+        "group": "2ffcd4b4969b4763",
+        "width": 5,
+        "height": 1,
+        "label": "Virtual Master 3",
+        "labelPlacement": "right",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#808080",
+                "value": "4",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "1",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "2",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "3",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": true,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "3",
+        "x": 930,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "195768347c81642d",
+        "type": "ui_led",
+        "z": "1d5e9feace854559",
+        "order": 6,
+        "group": "2ffcd4b4969b4763",
+        "width": 5,
+        "height": 1,
+        "label": "Virtual Master 4",
+        "labelPlacement": "right",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#808080",
+                "value": "4",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "1",
+                "valueType": "num"
+            },
+            {
+                "color": "#808080",
+                "value": "2",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "3",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": true,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "4",
+        "x": 930,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "30f1e084e4589497",
+        "type": "ui_group",
+        "name": "Informations",
+        "tab": "5ae3cbabc7986129",
+        "order": 3,
+        "disp": true,
+        "width": 15,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "81b1bdc3.9a60b8",
+        "type": "ui_group",
+        "name": "Hacks",
+        "tab": "2f5baa7e.0221fe",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false
+    },
+    {
+        "id": "c15864021fc5bf77",
+        "type": "ui_group",
+        "name": "Pictures",
+        "tab": "5ae3cbabc7986129",
+        "order": 2,
+        "disp": true,
+        "width": 12,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6197078df124b1e4",
+        "type": "ui_group",
+        "name": "Statistics",
+        "tab": "5ae3cbabc7986129",
+        "order": 4,
+        "disp": true,
+        "width": 15,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4229012c917460c6",
+        "type": "ui_group",
+        "name": "Team Members",
+        "tab": "5ae3cbabc7986129",
+        "order": 7,
+        "disp": true,
+        "width": 27,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9ed696d0692de4ae",
+        "type": "ui_group",
+        "name": "Top Bar",
+        "tab": "5ae3cbabc7986129",
+        "order": 1,
+        "disp": true,
+        "width": 27,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "7a35578913c2a642",
+        "type": "ui_group",
+        "name": "Status",
+        "tab": "5ae3cbabc7986129",
+        "order": 5,
+        "disp": true,
+        "width": 15,
+        "collapse": false,
+        "className": "status-class"
+    },
+    {
+        "id": "2ffcd4b4969b4763",
+        "type": "ui_group",
+        "name": "Nodes State",
+        "tab": "5ae3cbabc7986129",
+        "order": 6,
+        "disp": true,
+        "width": "15",
+        "collapse": false,
+        "className": "active-node"
+    },
+    {
+        "id": "5ae3cbabc7986129",
+        "type": "ui_tab",
+        "name": "Systeme",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "2f5baa7e.0221fe",
+        "type": "ui_tab",
+        "name": "Settings",
+        "icon": "timeline",
+        "order": 1,
+        "disabled": true,
+        "hidden": false
+    }
+]
